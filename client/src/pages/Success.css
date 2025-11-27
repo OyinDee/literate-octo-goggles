@@ -152,3 +152,10 @@
 .support-text a:hover {
   text-decoration: underline;
 }
+
+@media (max-width: 768px) {
+  .success-container {
+    border: none;
+    padding: 20px;
+  }
+}

@@ -239,3 +239,10 @@
 .input-field::placeholder {
   color: #71767b;
 }
+
+@media (max-width: 768px) {
+  .verification-container {
+    border: none;
+    padding: 20px;
+  }
+}
