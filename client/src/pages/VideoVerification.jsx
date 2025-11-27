@@ -102,12 +102,12 @@ function VideoVerification() {
     mediaRecorder.start()
     setIsRecording(true)
 
-    // Auto-stop after 10 seconds
+    // Auto-stop after 15 seconds
     setTimeout(() => {
       if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
         stopRecording()
       }
-    }, 10000)
+    }, 15000)
   }
 
   const stopRecording = () => {
@@ -164,7 +164,7 @@ function VideoVerification() {
         
         <p className="video-description">
           {!recordedVideo 
-            ? "Record a 10-second video to verify your identity and help unlock your friend's account. Position your face in the center, look straight at the camera, and slowly turn your head left and right."
+            ? "Record a 15-second video to verify your identity and help unlock your friend's account. Position your face in the center, look straight at the camera, and slowly turn your head left and right."
             : "Review your video and submit if you're satisfied. This will help verify your friend's account."}
         </p>
 
