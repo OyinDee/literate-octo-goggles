@@ -181,12 +181,13 @@ function VideoVerification() {
               autoPlay
               playsInline
               muted
-              className="video-feed"
+              className="video-feed live-preview"
             />
           ) : (
             <video
               src={recordedVideo.url}
               controls
+              autoPlay
               className="video-feed"
             />
           )}
