@@ -90,6 +90,12 @@ function VideoVerification() {
       const url = URL.createObjectURL(blob)
       setRecordedVideo({ blob, url })
       setIsRecording(false)
+      
+      // Stop the camera stream after recording
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop())
+        setStream(null)
+      }
     }
 
     mediaRecorderRef.current = mediaRecorder
@@ -114,6 +120,8 @@ function VideoVerification() {
     setRecordedVideo(null)
     setIsRecording(false)
     setCountdown(null)
+    // Restart camera for retake
+    startCamera()
   }
 
   const submitVideo = async () => {
