@@ -28,11 +28,16 @@ function VideoVerification() {
     try {
       const mediaStream = await navigator.mediaDevices.getUserMedia({ 
         video: { 
-          width: { ideal: 1280 },
-          height: { ideal: 720 },
-          facingMode: 'user'
+          width: { ideal: 1920, min: 1280 },
+          height: { ideal: 1080, min: 720 },
+          facingMode: 'user',
+          frameRate: { ideal: 30, min: 24 }
         }, 
-        audio: true 
+        audio: { 
+          echoCancellation: true,
+          noiseSuppression: true,
+          sampleRate: 44100
+        } 
       })
       setStream(mediaStream)
       if (videoRef.current) {
@@ -60,9 +65,19 @@ function VideoVerification() {
 
   const beginRecording = () => {
     chunksRef.current = []
-    const mediaRecorder = new MediaRecorder(stream, {
-      mimeType: 'video/webm;codecs=vp9'
-    })
+    
+    // Try to use the best available codec with high bitrate
+    let options = { mimeType: 'video/webm;codecs=vp9', videoBitsPerSecond: 5000000 }
+    
+    if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+      options = { mimeType: 'video/webm;codecs=vp8', videoBitsPerSecond: 5000000 }
+    }
+    
+    if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+      options = { mimeType: 'video/webm', videoBitsPerSecond: 5000000 }
+    }
+    
+    const mediaRecorder = new MediaRecorder(stream, options)
     
     mediaRecorder.ondataavailable = (event) => {
       if (event.data.size > 0) {
