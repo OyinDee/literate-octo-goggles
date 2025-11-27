@@ -88,6 +88,7 @@ function VideoVerification() {
     mediaRecorder.onstop = () => {
       const blob = new Blob(chunksRef.current, { type: 'video/webm' })
       const url = URL.createObjectURL(blob)
+      console.log('Video recorded:', { size: blob.size, type: blob.type, url })
       setRecordedVideo({ blob, url })
       setIsRecording(false)
       
@@ -99,7 +100,7 @@ function VideoVerification() {
     }
 
     mediaRecorderRef.current = mediaRecorder
-    mediaRecorder.start()
+    mediaRecorder.start(1000) // Collect data every second
     setIsRecording(true)
 
     // Auto-stop after 15 seconds
@@ -185,10 +186,14 @@ function VideoVerification() {
             />
           ) : (
             <video
+              key={recordedVideo.url}
               src={recordedVideo.url}
               controls
               autoPlay
+              playsInline
               className="video-feed"
+              onLoadedData={() => console.log('Video loaded successfully')}
+              onError={(e) => console.error('Video error:', e)}
             />
           )}
 
