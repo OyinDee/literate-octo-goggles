@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { LanguageProvider } from './contexts/LanguageContext'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import VerificationStart from './pages/VerificationStart'
@@ -8,15 +9,17 @@ import './App.css'
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/verify" element={<VerificationStart />} />
-        <Route path="/record" element={<VideoVerification />} />
-        <Route path="/success" element={<Success />} />
-      </Routes>
-    </Router>
+    <LanguageProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/verify" element={<VerificationStart />} />
+          <Route path="/record" element={<VideoVerification />} />
+          <Route path="/success" element={<Success />} />
+        </Routes>
+      </Router>
+    </LanguageProvider>
   )
 }
 

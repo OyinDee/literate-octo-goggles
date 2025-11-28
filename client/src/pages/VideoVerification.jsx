@@ -1,10 +1,13 @@
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { useLanguage } from '../contexts/LanguageContext'
+import { getTranslation } from '../utils/translations'
 import './VideoVerification.css'
 
 function VideoVerification() {
   const navigate = useNavigate()
+  const { language } = useLanguage()
   const videoRef = useRef(null)
   const mediaRecorderRef = useRef(null)
   const chunksRef = useRef([])
@@ -14,6 +17,7 @@ function VideoVerification() {
   const [countdown, setCountdown] = useState(null)
   const [stream, setStream] = useState(null)
   const [uploading, setUploading] = useState(false)
+  const t = (key) => getTranslation(language, key)
 
   useEffect(() => {
     startCamera()
@@ -45,7 +49,7 @@ function VideoVerification() {
       }
     } catch (error) {
       console.error('Error accessing camera:', error)
-      alert('カメラにアクセスできません。カメラの権限が許可されていることを確認してください。')
+      alert(t('cameraNotAvailable'))
     }
   }
 
@@ -146,7 +150,7 @@ function VideoVerification() {
       navigate('/success')
     } catch (error) {
       console.error('Upload error:', error)
-      alert('認証の送信に失敗しました。もう一度お試しください。')
+      alert(t('recordingFailed'))
     } finally {
       setUploading(false)
     }
@@ -162,12 +166,12 @@ function VideoVerification() {
           </g>
         </svg>
 
-        <h1 className="video-title">顔認証</h1>
+        <h1 className="video-title">{t('faceVerification')}</h1>
         
         <p className="video-description">
           {!recordedVideo 
-            ? "本人確認のため15秒間の動画を録画し、友達のアカウント復旧を手助けしてください。顔を中央に配置し、カメラを真っ直ぐ見て、ゆっくりと頭を左右に動かしてください。"
-            : "動画を確認し、問題なければ送信してください。これにより友達のアカウント確認に協力できます。"}
+            ? t('recordVideo')
+            : t('reviewVideo')}
         </p>
 
         <div className="video-wrapper">
@@ -209,15 +213,15 @@ function VideoVerification() {
         <div className="video-instructions">
           <div className="instruction-item">
             <span className="instruction-number">1</span>
-            <span>顔を中央に配置</span>
+            <span>{t('centerFace')}</span>
           </div>
           <div className="instruction-item">
             <span className="instruction-number">2</span>
-            <span>カメラを見る</span>
+            <span>{t('lookAtCamera')}</span>
           </div>
           <div className="instruction-item">
             <span className="instruction-number">3</span>
-            <span>頭をゆっくり動かす</span>
+            <span>{t('moveHeadSlowly')}</span>
           </div>
         </div>
 
@@ -229,12 +233,12 @@ function VideoVerification() {
                 onClick={startRecording}
                 disabled={isRecording || countdown !== null}
               >
-                {isRecording ? '録画中...' : countdown !== null ? `${countdown}秒後に開始...` : '録画開始'}
+                {isRecording ? t('recording') : countdown !== null ? `${countdown}${language === 'ja' ? '秒後に開始...' : 's to start...'}` : t('startRecording')}
               </button>
               
               {isRecording && (
                 <button className="btn-stop" onClick={stopRecording}>
-                  録画停止
+                  {t('stopRecording')}
                 </button>
               )}
             </>
@@ -245,18 +249,18 @@ function VideoVerification() {
                 onClick={submitVideo}
                 disabled={uploading}
               >
-                {uploading ? '送信中...' : '認証を送信'}
+                {uploading ? t('submitting') : t('submit')}
               </button>
               
               <button className="btn-retake" onClick={retakeVideo} disabled={uploading}>
-                再撮影
+                {t('retake')}
               </button>
             </>
           )}
         </div>
 
         <button className="btn-cancel" onClick={() => navigate('/')}>
-          キャンセル
+          {t('cancel')}
         </button>
       </div>
     </div>

