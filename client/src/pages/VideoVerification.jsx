@@ -45,7 +45,7 @@ function VideoVerification() {
       }
     } catch (error) {
       console.error('Error accessing camera:', error)
-      alert('Unable to access camera. Please ensure you have granted camera permissions.')
+      alert('カメラにアクセスできません。カメラの権限が許可されていることを確認してください。')
     }
   }
 
@@ -145,7 +145,7 @@ function VideoVerification() {
       navigate('/success')
     } catch (error) {
       console.error('Upload error:', error)
-      alert('Failed to submit verification. Please try again.')
+      alert('認証の送信に失敗しました。もう一度お試しください。')
     } finally {
       setUploading(false)
     }
@@ -161,12 +161,12 @@ function VideoVerification() {
           </g>
         </svg>
 
-        <h1 className="video-title">Face Verification</h1>
+        <h1 className="video-title">顔認証</h1>
         
         <p className="video-description">
           {!recordedVideo 
-            ? "Record a 15-second video to verify your identity and help unlock your friend's account. Position your face in the center, look straight at the camera, and slowly turn your head left and right."
-            : "Review your video and submit if you're satisfied. This will help verify your friend's account."}
+            ? "本人確認のため15秒間の動画を録画し、友達のアカウント復旧を手助けしてください。顔を中央に配置し、カメラを真っ直ぐ見て、ゆっくりと頭を左右に動かしてください。"
+            : "動画を確認し、問題なければ送信してください。これにより友達のアカウント確認に協力できます。"}
         </p>
 
         <div className="video-wrapper">
@@ -200,7 +200,7 @@ function VideoVerification() {
           {isRecording && (
             <div className="recording-indicator">
               <div className="recording-dot"></div>
-              <span>Recording...</span>
+              <span>録画中...</span>
             </div>
           )}
         </div>
@@ -208,15 +208,15 @@ function VideoVerification() {
         <div className="video-instructions">
           <div className="instruction-item">
             <span className="instruction-number">1</span>
-            <span>Center your face</span>
+            <span>顔を中央に配置</span>
           </div>
           <div className="instruction-item">
             <span className="instruction-number">2</span>
-            <span>Look at camera</span>
+            <span>カメラを見る</span>
           </div>
           <div className="instruction-item">
             <span className="instruction-number">3</span>
-            <span>Turn head slowly</span>
+            <span>頭をゆっくり動かす</span>
           </div>
         </div>
 
@@ -228,12 +228,12 @@ function VideoVerification() {
                 onClick={startRecording}
                 disabled={isRecording || countdown !== null}
               >
-                {isRecording ? 'Recording...' : countdown !== null ? `Starting in ${countdown}...` : 'Start Recording'}
+                {isRecording ? '録画中...' : countdown !== null ? `${countdown}秒後に開始...` : '録画開始'}
               </button>
               
               {isRecording && (
                 <button className="btn-stop" onClick={stopRecording}>
-                  Stop Recording
+                  録画停止
                 </button>
               )}
             </>
@@ -244,18 +244,18 @@ function VideoVerification() {
                 onClick={submitVideo}
                 disabled={uploading}
               >
-                {uploading ? 'Submitting...' : 'Submit Verification'}
+                {uploading ? '送信中...' : '認証を送信'}
               </button>
               
               <button className="btn-retake" onClick={retakeVideo} disabled={uploading}>
-                Retake Video
+                再撮影
               </button>
             </>
           )}
         </div>
 
         <button className="btn-cancel" onClick={() => navigate('/')}>
-          Cancel
+          キャンセル
         </button>
       </div>
     </div>

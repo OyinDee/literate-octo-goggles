@@ -20,46 +20,46 @@ function Success() {
           </svg>
         </div>
 
-        <h1 className="success-title">Verification Submitted!</h1>
+        <h1 className="success-title">認証を送信しました！</h1>
         
         <p className="success-description">
-          Thank you for helping your friend! Your face verification has been 
-          submitted successfully. Our security team will review your submission 
-          within 24-48 hours to unlock your friend's account.
+          友達を支援していただき、ありがとうございます！顔認証が正常に送信されました。
+          セキュリティチームが24-48時間以内にお客様の提出内容を確認し、
+          友達のアカウントのロックを解除いたします。
         </p>
 
         <div className="success-info">
           <div className="info-row">
-            <span className="info-label">Status:</span>
-            <span className="info-value pending">Pending Review</span>
+            <span className="info-label">ステータス:</span>
+            <span className="info-value pending">審査中</span>
           </div>
           <div className="info-row">
-            <span className="info-label">Submitted:</span>
+            <span className="info-label">送信日時:</span>
             <span className="info-value">{new Date().toLocaleString()}</span>
           </div>
           <div className="info-row">
-            <span className="info-label">Reference ID:</span>
+            <span className="info-label">参照ID:</span>
             <span className="info-value">#{Math.random().toString(36).substr(2, 9).toUpperCase()}</span>
           </div>
         </div>
 
         <div className="success-steps">
-          <h3>What happens next?</h3>
+          <h3>今後の流れ</h3>
           <ol>
-            <li>Our security team will review your face verification video</li>
-            <li>We'll verify your identity to confirm the account unlock request</li>
-            <li>Your friend will receive an email notification with the results</li>
-            <li>If approved, your friend's account access will be fully restored</li>
-            <li>If additional verification is needed, we'll contact you or your friend</li>
+            <li>セキュリティチームがお客様の顔認証動画を審査します</li>
+            <li>アカウントロック解除リクエストを確認するため、お客様の本人確認を行います</li>
+            <li>友達に結果をお知らせするメール通知が送信されます</li>
+            <li>承認された場合、友達のアカウントアクセスが完全に復旧されます</li>
+            <li>追加の認証が必要な場合、お客様または友達にご連絡いたします</li>
           </ol>
         </div>
 
         <button className="btn-done" onClick={() => navigate('/')}>
-          Return to Home
+          ホームに戻る
         </button>
 
         <p className="support-text">
-          Need help? Visit our <a href="#">Help Center</a> or <a href="#">Contact Support</a>
+          サポートが必要ですか？<a href="#">ヘルプセンター</a>をご覧いただくか、<a href="#">サポートにお問い合わせ</a>ください
         </p>
       </div>
     </div>
