@@ -133,6 +133,9 @@
 
 .signin-section {
   margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .signin-text {

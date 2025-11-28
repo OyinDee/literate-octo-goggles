@@ -77,10 +77,15 @@ function Home() {
 
         <div className="signin-section">
           <p className="signin-text">{t('alreadyHaveAccount')}</p>
-          <button className="btn btn-outline">{t('logIn')}</button>
           <button 
             className="btn btn-outline"
             onClick={() => navigate('/login')}
+          >
+            {t('logIn')}
+          </button>
+          <button 
+            className="btn btn-outline"
+            onClick={() => navigate('/verify')}
           >
             <svg viewBox="0 0 24 24" className="btn-icon" aria-hidden="true">
               <g>
