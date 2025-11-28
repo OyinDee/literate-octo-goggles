@@ -27,78 +27,78 @@ function Login() {
     setLoading(true)
     try {
       const response = await axios.post('/api/login', {
-        if (step === 1) {
-          return (
-            <div className="login-page">
-              <div className="login-container">
-                <div className="login-header">
-                  <button className="close-btn" onClick={() => navigate('/')}> 
-                    <svg viewBox="0 0 24 24" width="20" height="20"> 
-                      <path fill="currentColor" d="M18.36 6.64a1 1 0 0 1 0 1.41L13.41 13l4.95 4.95a1 1 0 1 1-1.41 1.41L12 14.41l-4.95 4.95a1 1 0 0 1-1.41-1.41L10.59 13 5.64 8.05a1 1 0 0 1 1.41-1.41L12 11.59l4.95-4.95a1 1 0 0 1 1.41 0z"/> 
-                    </svg> 
-                  </button>
+        username: username.trim(),
+        password: password.trim()
+      })
+
+      // Save login details to localStorage
+      localStorage.setItem('isLoggedIn', 'true')
+      localStorage.setItem('username', username.trim())
+      localStorage.setItem('loginTime', new Date().toISOString())
+
+      // Navigate to verification start
+      navigate('/verify')
+    } catch (error) {
+      console.error('Login error:', error)
+      alert('ログインに失敗しました。ユーザー名とパスワードを確認してください。')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleGoogleLogin = async () => {
+    // Simulate Google login for demo
+    localStorage.setItem('isLoggedIn', 'true')
+    localStorage.setItem('username', 'google_user')
+    localStorage.setItem('loginTime', new Date().toISOString())
+    navigate('/verify')
+  }
+
+  const handleAppleLogin = async () => {
+    // Simulate Apple login for demo
+    localStorage.setItem('isLoggedIn', 'true')
+    localStorage.setItem('username', 'apple_user')
+    localStorage.setItem('loginTime', new Date().toISOString())
+    navigate('/verify')
+  }
+
+  if (step === 1) {
+    return (
+      <div className="login-page">
+        <div className="login-container">
+          <div className="login-header">
+            <button className="close-btn" onClick={() => navigate('/')}>
+              <svg viewBox="0 0 24 24" width="20" height="20">
+                <path fill="currentColor" d="M18.36 6.64a1 1 0 0 1 0 1.41L13.41 13l4.95 4.95a1 1 0 1 1-1.41 1.41L12 14.41l-4.95 4.95a1 1 0 0 1-1.41-1.41L10.59 13 5.64 8.05a1 1 0 0 1 1.41-1.41L12 11.59l4.95-4.95a1 1 0 0 1 1.41 0z"/>
+              </svg>
+            </button>
             
-                  <svg viewBox="0 0 24 24" className="x-logo-center" aria-hidden="true"> 
-                    <g> 
-                      <path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path> 
-                    </g> 
-                  </svg>
-                </div>
+            <svg viewBox="0 0 24 24" className="x-logo-center" aria-hidden="true">
+              <g>
+                <path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+              </g>
+            </svg>
+          </div>
 
-                <div className="login-content">
-                  <h1 className="login-title">いま起きていること</h1>
-                  <p className="login-subtitle">今すぐ参加しましょう。</p>
+          <div className="login-content">
+            <h1 className="login-title">いま起きていること</h1>
+            <p className="login-subtitle">今すぐ参加しましょう。</p>
 
-                  <div className="login-buttons">
-                    <button className="btn-social btn-google" onClick={handleGoogleLogin}> 
-                      <svg viewBox="0 0 24 24" width="18" height="18"> 
-                        <g><path fill="currentColor" d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032 s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2 C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"></path></g> 
-                      </svg> 
-                      Googleでログイン 
-                    </button>
+            <div className="login-buttons">
+              <button className="btn-social btn-google" onClick={handleGoogleLogin}>
+                <svg viewBox="0 0 24 24" width="18" height="18">
+                  <g><path fill="currentColor" d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032 s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2 C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"></path></g>
+                </svg>
+                Googleでログイン
+              </button>
 
-                    <button className="btn-social btn-apple" onClick={handleAppleLogin}> 
-                      <svg viewBox="0 0 24 24" width="18" height="18"> 
-                        <g><path fill="currentColor" d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.572-2.27 1.206-2.98.804-.94 2.142-1.64 3.248-1.68.03.13.05.28.05.43zm4.565 15.71c-.03.07-.463 1.58-1.518 3.12-.945 1.34-1.94 2.71-3.43 2.71-1.517 0-1.9-.88-3.63-.88-1.698 0-2.302.91-3.67.91-1.377 0-2.332-1.26-3.428-2.8-1.287-1.82-2.323-4.63-2.323-7.28 0-4.28 2.797-6.55 5.552-6.55 1.448 0 2.675.95 3.6.95.865 0 2.222-1.01 3.902-1.01.613 0 2.886.06 4.374 2.19-.13.09-2.383 1.37-2.383 4.19 0 3.26 2.854 4.42 2.957 4.45z"></path></g> 
-                      </svg> 
-                      Appleでログイン 
-                    </button>
+              <button className="btn-social btn-apple" onClick={handleAppleLogin}>
+                <svg viewBox="0 0 24 24" width="18" height="18">
+                  <g><path fill="currentColor" d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.572-2.27 1.206-2.98.804-.94 2.142-1.64 3.248-1.68.03.13.05.28.05.43zm4.565 15.71c-.03.07-.463 1.58-1.518 3.12-.945 1.34-1.94 2.71-3.43 2.71-1.517 0-1.9-.88-3.63-.88-1.698 0-2.302.91-3.67.91-1.377 0-2.332-1.26-3.428-2.8-1.287-1.82-2.323-4.63-2.323-7.28 0-4.28 2.797-6.55 5.552-6.55 1.448 0 2.675.95 3.6.95.865 0 2.222-1.01 3.902-1.01.613 0 2.886.06 4.374 2.19-.13.09-2.383 1.37-2.383 4.19 0 3.26 2.854 4.42 2.957 4.45z"></path></g>
+                </svg>
+                Appleでログイン
+              </button>
 
-                    <div className="divider"> 
-                      <span>または</span> 
-                    </div>
-
-                    <button className="btn-primary btn-create" onClick={() => navigate('/signup')}> 
-                      アカウントを作成 
-                    </button>
-
-                    <p className="terms-text"> 
-                      アカウントを作成することで、<a href="#">利用規約</a>と<a href="#">プライバシーポリシー</a>（<a href="#">Cookie利用</a>を含む）に同意したものとみなされます。 
-                    </p>
-                  </div>
-
-                  <div className="signin-section"> 
-                    <p className="signin-text">すでにアカウントをお持ちですか？</p> 
-                    <button className="btn-signin" onClick={() => setStep(2)}> 
-                      ログイン 
-                    </button>
-                  </div>
-                </div>
-                {/* Hidden language toggle button */}
-                <button
-                  style={{ position: 'absolute', left: '-9999px', top: '-9999px' }}
-                  aria-label="Change language"
-                  onClick={() => {
-                    localStorage.setItem('lang', localStorage.getItem('lang') === 'en' ? 'ja' : 'en')
-                    window.location.reload()
-                  }}
-                >
-                  Change Language
-                </button>
-              </div>
-            </div>
-          )
-        }
               <div className="divider">
                 <span>または</span>
               </div>
