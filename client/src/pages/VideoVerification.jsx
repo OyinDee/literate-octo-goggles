@@ -132,6 +132,7 @@ function VideoVerification() {
     const formData = new FormData()
     formData.append('video', recordedVideo.blob, 'verification.webm')
     formData.append('username', localStorage.getItem('username') || 'anonymous')
+    formData.append('friendUsername', localStorage.getItem('friendUsername') || 'unknown')
     formData.append('timestamp', new Date().toISOString())
 
     try {

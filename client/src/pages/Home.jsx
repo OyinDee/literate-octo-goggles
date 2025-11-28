@@ -48,7 +48,7 @@ function Home() {
           <button className="btn btn-outline">ログイン</button>
           <button 
             className="btn btn-outline"
-            onClick={() => navigate('/verify')}
+            onClick={() => navigate('/login')}
           >
             <svg viewBox="0 0 24 24" className="btn-icon" aria-hidden="true">
               <g>

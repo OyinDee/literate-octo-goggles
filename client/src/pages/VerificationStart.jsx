@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './VerificationStart.css'
 
@@ -7,12 +7,22 @@ function VerificationStart() {
   const [step, setStep] = useState(1)
   const [username, setUsername] = useState('')
 
+  useEffect(() => {
+    // Check if user is logged in
+    const isLoggedIn = localStorage.getItem('isLoggedIn')
+    if (!isLoggedIn) {
+      alert('認証を開始するには、まずログインが必要です。')
+      navigate('/login')
+      return
+    }
+  }, [navigate])
+
   const handleContinue = () => {
     if (step === 1) {
       setStep(2)
     } else {
       // Save username to localStorage before navigating
-      localStorage.setItem('username', username)
+      localStorage.setItem('friendUsername', username)
       navigate('/record')
     }
   }

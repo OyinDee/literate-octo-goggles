@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
+import Login from './pages/Login'
 import VerificationStart from './pages/VerificationStart'
 import VideoVerification from './pages/VideoVerification'
 import Success from './pages/Success'
@@ -9,8 +10,9 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<VerificationStart />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/verify" element={<VerificationStart />} />
         <Route path="/record" element={<VideoVerification />} />
         <Route path="/success" element={<Success />} />
       </Routes>

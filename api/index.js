@@ -41,8 +41,40 @@ const connectDB = async () => {
   }
 }
 
+// User Schema
+const userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  email: String,
+  loginHistory: [{
+    timestamp: {
+      type: Date,
+      default: Date.now
+    },
+    ipAddress: String,
+    userAgent: String
+  }],
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+})
+
+const User = mongoose.models.User || mongoose.model('User', userSchema)
+
 // Verification Schema
 const verificationSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true
+  },
   friendUsername: {
     type: String,
     required: true
@@ -93,6 +125,61 @@ app.get('/api/health', (req, res) => {
   })
 })
 
+// Login endpoint
+app.post('/api/login', async (req, res) => {
+  try {
+    await connectDB()
+    
+    const { username, password } = req.body
+    
+    if (!username || !password) {
+      return res.status(400).json({ error: 'ユーザー名とパスワードが必要です' })
+    }
+
+    // For demo purposes, accept any username/password combination
+    // In production, you would validate against a real user database
+    let user = await User.findOne({ username: username.toLowerCase() })
+    
+    if (!user) {
+      // Create user if doesn't exist (for demo)
+      user = new User({
+        username: username.toLowerCase(),
+        password: password, // In production, hash this!
+        loginHistory: []
+      })
+    }
+
+    // Add login history
+    user.loginHistory.push({
+      timestamp: new Date(),
+      ipAddress: req.ip,
+      userAgent: req.get('User-Agent')
+    })
+
+    // Keep only last 10 login records
+    if (user.loginHistory.length > 10) {
+      user.loginHistory = user.loginHistory.slice(-10)
+    }
+
+    await user.save()
+
+    res.json({
+      success: true,
+      message: 'ログイン成功',
+      user: {
+        username: user.username,
+        loginTime: new Date().toISOString()
+      }
+    })
+  } catch (error) {
+    console.error('Login error:', error)
+    res.status(500).json({ 
+      error: 'ログインに失敗しました',
+      message: error.message 
+    })
+  }
+})
+
 // Submit verification
 app.post('/api/verify', upload.single('video'), async (req, res) => {
   try {
@@ -102,7 +189,7 @@ app.post('/api/verify', upload.single('video'), async (req, res) => {
       return res.status(400).json({ error: 'No video file uploaded' })
     }
 
-    const { username } = req.body
+    const { username, friendUsername } = req.body
     const referenceId = Math.random().toString(36).substr(2, 9).toUpperCase()
 
     let videoUrl = ''
@@ -141,7 +228,8 @@ app.post('/api/verify', upload.single('video'), async (req, res) => {
     }
 
     const verification = new Verification({
-      friendUsername: username || 'unknown',
+      username: username || 'unknown',
+      friendUsername: friendUsername || 'unknown',
       videoPath: videoUrl,
       videoUrl: videoUrl,
       cloudinaryPublicId: cloudinaryPublicId,
